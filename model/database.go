@@ -30,6 +30,7 @@ func InitDatabase() *gorm.DB{
 	}
 
 	// Migrate the schema
+	db.AutoMigrate(&UrlShortner{})
 	dbClient = &DBClient{
 		DB: db,
 	}

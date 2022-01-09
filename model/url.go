@@ -1,10 +1,12 @@
 package model
 
-import "log"
+import (
+	"log"
+)
 
 type UrlShortner struct {
-	Id      int64 `json:"id" gorm:"primary_key;auto_increment;not_null"`
-	LongURL string
+	Id      int64  `json:"id" gorm:"primary_key;auto_increment;not_null"`
+	LongURL string `json:"long_url" gorm:"not_null"`
 }
 
 func AddNewUrl(longURL string) (int64, error) {
@@ -25,9 +27,7 @@ func GetLongURL(id int64) (string, error) {
 	var urlShortner UrlShortner
 	result := dbClient.DB.First(&urlShortner, id)
 	if result.Error != nil {
-		log.Fatalf("Some unexpected error occured %v", result.Error)
 		return "", result.Error
 	}
 	return urlShortner.LongURL, nil
-
 }
